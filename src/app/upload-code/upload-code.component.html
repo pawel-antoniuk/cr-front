@@ -1,0 +1,29 @@
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step label="Select a task">
+    <app-tasks (onTaskChange)="onTaskChange($event)"></app-tasks>
+  </mat-step>
+  <mat-step label="Upload the implementation">
+    <div class="form-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Code</mat-label>
+        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="10"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Language</mat-label>
+        <mat-select>
+          <mat-option value="python">Python</mat-option>
+          <mat-option value="java">Java</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button (click)="onUpload()" mat-raised-button color="primary" class="upload-button">
+        Upload
+      </button>
+    </div>
+  </mat-step>
+
+  <mat-step label="View results">
+    <mat-spinner></mat-spinner>
+  </mat-step>
+</mat-horizontal-stepper>

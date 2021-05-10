@@ -1,0 +1,76 @@
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step label="Select a task">
+    <div class="form-container">
+      <h1>Create a new task</h1>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="10"
+        ></textarea>
+      </mat-form-field>
+
+      <h1>...or select an existing task</h1>
+      <app-tasks (onTaskChange)="onTaskChange($event)"></app-tasks>
+
+      <button mat-raised-button color="primary" class="upload-button">
+        Add
+      </button>
+    </div>
+  </mat-step>
+  <mat-step label="Edit test cases">
+    <div class="form-container">
+      <h1>Create a new test case</h1>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="selectedTestCase.name"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Input</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="10"
+          [(ngModel)]="selectedTestCase.input"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Input</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="10"
+          [(ngModel)]="selectedTestCase.output"
+        ></textarea>
+      </mat-form-field>
+
+      <h1>...or select an existing test case</h1>
+      <mat-selection-list
+        multiple="false"
+        (selectionChange)="onTestCaseChange($event)"
+      >
+        <mat-list-option
+          *ngFor="let testCase of selctedTask?.testCases"
+          [value]="testCase"
+        >
+          <h3 matLine>
+            {{ testCase.name }}
+            <span class="task-id">(#{{ testCase.id }}) </span>
+          </h3>
+          <h4 matLine>{{ testCase.input }}</h4>
+          <h4 matLine>{{ testCase.output }}</h4>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+  </mat-step>
+  <mat-step label="Accept changes">
+    <mat-spinner></mat-spinner>
+  </mat-step>
+</mat-horizontal-stepper>
