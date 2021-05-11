@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
 import { MatStepper } from '@angular/material/stepper';
-import { Task } from '../models/task';
-import { TestCase } from '../models/test-case';
-import { DataService } from '../data.service';
+import { Task } from '../../models/task';
+import { TestCase } from '../../models/test-case';
+import { DataService } from '../../services/data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({

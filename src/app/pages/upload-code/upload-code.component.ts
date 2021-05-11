@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
-import { Task } from '../models/task';
+import { Task } from '../../models/task';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DataService } from '../data.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-upload-code',

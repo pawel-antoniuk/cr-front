@@ -27,13 +27,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
-import { UploadCodeComponent } from './upload-code/upload-code.component';
-import { SummaryComponent } from './summary/summary.component';
+import { UploadCodeComponent } from './pages/upload-code/upload-code.component';
+import { SummaryComponent } from './pages/summary/summary.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { AddTaskComponent } from './add-task/add-task.component';
+import { ToolbarComponent } from './pages/toolbar/toolbar.component';
+import { AddTaskComponent } from './pages/add-task/add-task.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { EditTaskComponent } from './edit-task/edit-task.component';
+import { EditTaskComponent } from './pages/edit-task/edit-task.component';
 
 @NgModule({
   declarations: [

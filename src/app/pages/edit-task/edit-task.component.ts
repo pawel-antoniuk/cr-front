@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
-import { Task } from '../models/task';
-import { TestCase } from '../models/test-case';
+import { Task } from '../../models/task';
+import { TestCase } from '../../models/test-case';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DataService } from '../data.service';
+import { DataService } from '../../services/data.service';
 import { MatSelectionListChange } from '@angular/material/list';
 
 @Component({
@@ -13,7 +13,7 @@ import { MatSelectionListChange } from '@angular/material/list';
 })
 export class EditTaskComponent implements OnInit {
 
- 
+
   @ViewChild('stepper') stepper!: MatStepper;
 
   public selctedTask?: Task;
