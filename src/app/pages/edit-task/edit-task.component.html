@@ -66,10 +66,10 @@
             </mat-selection-list>
 
             <h3 class="subtask-label">... or create a new test case:</h3>
-            <mat-form-field appearance="fill">
+            <!-- <mat-form-field appearance="fill">
                 <mat-label>Name</mat-label>
                 <input matInput [(ngModel)]="selectedTestCase.name" formControlName="nameCtrl" />
-            </mat-form-field>
+            </mat-form-field> -->
             <mat-form-field appearance="fill">
                 <mat-label>Input</mat-label>
                 <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="10" [(ngModel)]="selectedTestCase.input"
@@ -94,13 +94,14 @@
 
             <div class="button-box">
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext (click)="lastStep()">Next</button>
             </div>
         </form>
     </mat-step>
 
     <!-- Step 4 -->
     <mat-step label="Accept changes" [stepControl]="fourthFormGroup">
-        <mat-spinner></mat-spinner>
+        <mat-spinner *ngIf="!status"></mat-spinner>
+        <h2 *ngIf="response">{{status}}</h2>
     </mat-step>
 </mat-horizontal-stepper>
