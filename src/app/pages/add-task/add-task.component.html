@@ -10,17 +10,20 @@
 </div>
 
 <div class="form-container">
+  <form [formGroup]="firstFormGroup">
   <mat-form-field appearance="fill">
     <mat-label>Name</mat-label>
-    <input matInput />
+    <input matInput [(ngModel)]="newTask.name" formControlName="nameCtrl" />
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Description</mat-label>
-    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="10"></textarea>
+    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="10" [(ngModel)]="newTask.description"
+      formControlName="descCtrl"></textarea>
   </mat-form-field>
 
   <div class="button-box">
-    <button mat-button>Save</button>
+    <button mat-button (click)="saveBtn()">Save</button>
   </div>
+  </form>
 </div>

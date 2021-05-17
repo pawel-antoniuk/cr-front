@@ -46,7 +46,7 @@
     <mat-step label="Edit test cases" [stepControl]="thridFormGroup">
         <form [formGroup]="thridFormGroup">
             <h3 class="subtask-label">Select an existing test case:</h3>
-            <mat-selection-list multiple="false" formControlName="taskCasesListCtrl" required
+            <mat-selection-list multiple="false" required
                 (selectionChange)="onTestCaseChange($event)">
                 <mat-list-option *ngFor="let testCase of selectedTaskTestCases" [value]="testCase">
                     <h3 matLine>

@@ -5,6 +5,7 @@ import { Task } from '../../models/task';
 import { TestCase } from '../../models/test-case';
 import { DataService } from '../../services/data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-task',
@@ -15,31 +16,51 @@ export class AddTaskComponent implements OnInit {
 
   @ViewChild('stepper') stepper!: MatStepper;
 
-  public selctedTask?: Task;
-  public selectedTestCase = new TestCase();
-  tasks?: Task[]
+  // public selctedTask?: Task;
+  // public selectedTestCase = new TestCase();
+  newTask: Task = new Task();
+  // tasks?: Task[]
   firstFormGroup!: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private http: HttpClient) { }
 
   ngOnInit(): void {
     this.firstFormGroup = this.formBuilder.group({
-      taskCtrl: ['', Validators.required],
+      // taskCtrl: ['', Validators.required],
+      nameCtrl: ['', Validators.required],
+      descCtrl: ['', Validators.required],
     });
-    this.dataService.getTasks().subscribe({
-      next: tasks => {
-        this.tasks = tasks;
-      }
-    })
+    // this.dataService.getTasks().subscribe({
+    //   next: tasks => {
+    //     this.tasks = tasks;
+    //   }
+    // })
   }
 
-  onTaskChange() {
-    this.stepper.next();
+  saveBtn() {
+    console.log('saveBtn pressed');
+    console.log(this.newTask);
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    const bodyTask = JSON.stringify({ TaskModel: this.newTask });
+    console.log(bodyTask);
+    this.http.post<Task>('https://localhost:44359/api/Task/Create', bodyTask, httpOptions)
+      .subscribe((response) => {
+        console.log('post');
+        console.log(response);
+      });
   }
 
-  onTestCaseChange(ev: MatSelectionListChange) {
-    this.selectedTestCase = ev.option.value;
-  }
+  // onTaskChange() {
+  //   this.stepper.next();
+  //   console.log("XD STEPPER!");
+  // }
+
+  // onTestCaseChange(ev: MatSelectionListChange) {
+  //   this.selectedTestCase = ev.option.value;
+  // }
 
 }
