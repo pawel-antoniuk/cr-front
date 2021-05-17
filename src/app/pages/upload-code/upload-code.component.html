@@ -42,12 +42,12 @@
       <div class="form-container">
         <mat-form-field appearance="fill">
           <mat-label>Code</mat-label>
-          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="10" formControlName="codeCtrl" required></textarea>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="10" [(ngModel)]="solution.code" formControlName="codeCtrl" required></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Language</mat-label>
-          <mat-select formControlName="langCtrl" required>
+          <mat-select  [(ngModel)]="solution.language" formControlName="langCtrl" required>
             <mat-option value="python">Python</mat-option>
             <mat-option value="java">Java</mat-option>
           </mat-select>
@@ -63,6 +63,7 @@
 
   <!-- Step 3 -->
   <mat-step label="View results" [stepControl]="thirdFormGroup">
-    <mat-spinner></mat-spinner>
+    <mat-spinner *ngIf="!status"></mat-spinner>
+        <h2 *ngIf="response">{{status}}</h2>
   </mat-step>
 </mat-horizontal-stepper>
