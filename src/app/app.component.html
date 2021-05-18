@@ -1,19 +1,31 @@
 <!-- <router-outlet></router-outlet> -->
 
 <app-toolbar></app-toolbar>
+<!--
+<nav mat-tab-nav-bar>
+  <a
+    mat-tab-link
+    *ngFor="let link of links"
+    (click)="activeLink = link"
+    [active]="activeLink == link"
+    [routerLink]="link.link"
+  >
+    {{ link.label }}
+  </a>
+</nav> -->
 
-<mat-tab-group>
+<mat-tab-group backgroundColor="primary">
   <mat-tab label="Upload code">
     <mat-card class="container">
       <app-upload-code></app-upload-code>
     </mat-card>
   </mat-tab>
-  <mat-tab label="Add a new task">
+  <mat-tab label="New task">
     <mat-card class="container">
       <app-add-task></app-add-task>
     </mat-card>
   </mat-tab>
-  <mat-tab label="Edit tasks">
+  <mat-tab label="Edit Task">
     <mat-card class="container">
       <app-edit-task></app-edit-task>
     </mat-card>
@@ -25,6 +37,7 @@
   </mat-tab>
 </mat-tab-group>
 
+<div class="logo-placeholder"></div>
 <div class="logo">
-  <img width="100" src="/assets/logo PB angielska wersja.png">
+  <img width="60" src="/assets/logo PB angielska wersja.png" />
 </div>

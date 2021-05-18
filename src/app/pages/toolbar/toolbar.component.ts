@@ -12,4 +12,8 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  refresh() {
+    window.location.reload();
+  }
+
 }

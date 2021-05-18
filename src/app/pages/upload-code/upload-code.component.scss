@@ -25,3 +25,21 @@ mat-form-field {
 .task-details {
   margin-bottom: 30px;
 }
+
+mat-form-field {
+  width: 100%;
+}
+
+.form-container {
+  padding: 25px;
+}
+
+.upload-button {
+  float: right;
+}
+
+.task-id {
+  float: right;
+  font-size: 70%;
+  color: #aaa;
+}

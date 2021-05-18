@@ -18,21 +18,22 @@
 <mat-horizontal-stepper [linear]="true" #stepper>
 
   <!-- Step 1 -->
-  <mat-step label="Select a task" [stepControl]="firstFormGroup">
+  <mat-step label="Choose a task" [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
-      <mat-selection-list [(ngModel)]="selectedTasks" multiple="false" (selectionChange)="onTaskChange()" formControlName="taskCtrl" required>
-        <mat-list-option *ngFor="let task of tasks" [value]="task">
-          <h3 matLine>{{task.name}} <span class="task-id">(#{{task.id}}) </span></h3>
+      <mat-selection-list [(ngModel)]="selectedTasks" multiple="false" formControlName="taskCtrl" required
+      (selectionChange)="onTaskChange()">
+      <mat-list-option *ngFor="let task of tasks" [value]="task">
+          <h3 matLine>{{task.name}} <span class="task-id">id: {{task.id}}</span></h3>
           <h4 matLine>{{task.description}}</h4>
-        </mat-list-option>
-      </mat-selection-list>
+      </mat-list-option>
+  </mat-selection-list>
 
       <!-- <app-tasks (onTaskChange)="onTaskChange($event)"></app-tasks> -->
     </form>
   </mat-step>
 
   <!-- Step 2 -->
-  <mat-step label="Upload the implementation" [stepControl]="secondFormGroup">
+  <mat-step label="Upload a solution" [stepControl]="secondFormGroup">
     <div class="task-details">
       <h1>{{ getSelectedTask()?.name }}</h1>
       <p>{{ getSelectedTask()?.description }}</p>
@@ -63,7 +64,7 @@
 
   <!-- Step 3 -->
   <mat-step label="View results" [stepControl]="thirdFormGroup">
-    <mat-spinner *ngIf="!status"></mat-spinner>
-        <h2 *ngIf="response">{{status}}</h2>
+    <!-- <mat-spinner *ngIf="!status"></mat-spinner>
+        <h2 *ngIf="response">{{status}}</h2> -->
   </mat-step>
 </mat-horizontal-stepper>

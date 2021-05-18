@@ -6,6 +6,7 @@ import { TestCase } from '../../models/test-case';
 import { DataService } from '../../services/data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-task',
@@ -24,7 +25,8 @@ export class AddTaskComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private dataService: DataService,
-    private http: HttpClient) { }
+    private router: Router
+   ) { }
 
   ngOnInit(): void {
     this.firstFormGroup = this.formBuilder.group({
@@ -40,18 +42,9 @@ export class AddTaskComponent implements OnInit {
   }
 
   saveBtn() {
-    console.log('saveBtn pressed');
-    console.log(this.newTask);
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    }
-    const bodyTask = JSON.stringify({ TaskModel: this.newTask });
-    console.log(bodyTask);
-    this.http.post<Task>('https://localhost:44359/api/Task/Create', bodyTask, httpOptions)
-      .subscribe((response) => {
-        console.log('post');
-        console.log(response);
-      });
+    this.dataService.addTask(this.newTask).subscribe(() => {
+      window.location.reload();
+    })
   }
 
   // onTaskChange() {
