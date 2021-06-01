@@ -1,7 +1,9 @@
-<!-- <router-outlet></router-outlet> -->
+<div class="main-container">
+  <!-- <router-outlet></router-outlet> -->
 
-<app-toolbar></app-toolbar>
-<!--
+  <app-toolbar></app-toolbar>
+
+  <!--
 <nav mat-tab-nav-bar>
   <a
     mat-tab-link
@@ -14,30 +16,82 @@
   </a>
 </nav> -->
 
-<mat-tab-group backgroundColor="primary">
-  <mat-tab label="Upload code">
-    <mat-card class="container">
-      <app-upload-code></app-upload-code>
-    </mat-card>
-  </mat-tab>
-  <mat-tab label="New task">
-    <mat-card class="container">
-      <app-add-task></app-add-task>
-    </mat-card>
-  </mat-tab>
-  <mat-tab label="Edit Task">
-    <mat-card class="container">
-      <app-edit-task></app-edit-task>
-    </mat-card>
-  </mat-tab>
-  <mat-tab label="Execution summary">
-    <mat-card class="container">
-      <app-summary></app-summary>
-    </mat-card>
-  </mat-tab>
-</mat-tab-group>
+  <mat-tab-group class="main-tab-bar" backgroundColor="primary" mat-stretch-tabs [@.disabled]="true">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>campaign</mat-icon>
+        <span class="tab-text">Recents</span>
+      </ng-template>
+      <ng-template matTabContent>
+        <div class="container">
+          <app-recents></app-recents>
+        </div>
+      </ng-template>
+    </mat-tab>
 
-<div class="logo-placeholder"></div>
-<div class="logo">
-  <img width="60" src="/assets/logo PB angielska wersja.png" />
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>star</mat-icon>
+        <span class="tab-text">Ranking</span>
+      </ng-template>
+      <ng-template matTabContent>
+        <div class="container">
+          <app-ranking></app-ranking>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>file_upload</mat-icon>
+        <span class="tab-text">Upload Code</span>
+      </ng-template>
+      <ng-template matTabContent>
+        <div class="container">
+          <app-upload-code></app-upload-code>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>add_task</mat-icon>
+        <span class="tab-text">Create Task</span>
+      </ng-template>
+      <ng-template matTabContent>
+        <div class="container">
+          <app-add-task></app-add-task>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>edit</mat-icon>
+        <span class="tab-text">Edit Task</span>
+      </ng-template>
+      <ng-template matTabContent>
+        <div class="container">
+          <app-edit-task></app-edit-task>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>assessment</mat-icon>
+        <span class="tab-text">Results</span>
+      </ng-template>
+      <ng-template matTabContent>
+        <div class="container">
+          <app-summary></app-summary>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div class="logo-placeholder"></div>
+  <div class="logo">
+    <img width="200" src="/assets/PB_logo_poziom.png" />
+  </div>
 </div>

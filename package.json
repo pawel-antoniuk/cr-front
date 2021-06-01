@@ -21,6 +21,9 @@
     "@angular/platform-browser": "~11.2.6",
     "@angular/platform-browser-dynamic": "~11.2.6",
     "@angular/router": "~11.2.6",
+    "angular-plotly.js": "^4.0.0",
+    "plotly.js": "^1.58.4",
+    "plotly.js-dist": "^1.58.4",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
@@ -31,6 +34,7 @@
     "@angular/compiler-cli": "~11.2.6",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "@types/plotly.js": "^1.54.10",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",

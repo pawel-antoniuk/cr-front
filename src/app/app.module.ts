@@ -35,6 +35,11 @@ import { ToolbarComponent } from './pages/toolbar/toolbar.component';
 import { AddTaskComponent } from './pages/add-task/add-task.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EditTaskComponent } from './pages/edit-task/edit-task.component';
+import { SummaryResultsComponent } from './pages/summary-results/summary-results.component';
+import { RankingComponent } from './pages/ranking/ranking.component';
+import { RecentsComponent } from './pages/recents/recents.component';
+import { SummaryGraphsComponent } from './pages/summary-graphs/summary-graphs.component';
+
 
 @NgModule({
   declarations: [
@@ -44,6 +49,10 @@ import { EditTaskComponent } from './pages/edit-task/edit-task.component';
     ToolbarComponent,
     AddTaskComponent,
     EditTaskComponent,
+    SummaryResultsComponent,
+    RankingComponent,
+    RecentsComponent,
+    SummaryGraphsComponent,
   ],
   imports: [
     BrowserModule,

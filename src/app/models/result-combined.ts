@@ -4,7 +4,8 @@ export class ResultCombined {
   public outputCorrectness!: string;
   public code!: string;
   public language!: string;
-  public name!: string;
+  public taskName!: string;
+  public taskId!: string;
   public input!: string;
   public output!: string;
 }

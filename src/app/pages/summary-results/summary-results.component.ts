@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { combineLatest } from 'rxjs';
 import { Result } from 'src/app/models/result';
 import { ResultCombined } from 'src/app/models/result-combined';
 import { Solution } from 'src/app/models/solution';
@@ -10,11 +9,12 @@ import { TestCase } from 'src/app/models/test-case';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
-  selector: 'app-summary',
-  templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.scss'],
+  selector: 'app-summary-results',
+  templateUrl: './summary-results.component.html',
+  styleUrls: ['./summary-results.component.scss']
 })
-export class SummaryComponent implements OnInit {
+export class SummaryResultsComponent implements OnInit {
+
   allResults: ResultCombined[] = [];
   filteredResults: ResultCombined[] = [];
   allAvailableColumns = [
@@ -33,9 +33,9 @@ export class SummaryComponent implements OnInit {
     'Execution time [s]',
     'Memory usage [KiB]',
     'Correctness',
-    'language',
-    'input',
-    'output',
+    'Language',
+    'Input',
+    'Output',
   ];
   displayedColumns = ['taskName', 'executionTime', 'memoryUsage'];
 
