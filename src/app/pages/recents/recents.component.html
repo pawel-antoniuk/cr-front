@@ -1,17 +1,29 @@
-<div class="tab-header">
-  <h1>Recents</h1>
-  <div class="tab-desc-container">
-    <div>
+<div class="container">
+  <div class="tab-header">
+    <h1>Recents</h1>
+    <div class="tab-desc-container">
+      <!-- <div>
       <mat-icon class="desc-icon">info_outline</mat-icon>
-    </div>
-    <div>
-      Here you can view the summary of execution of all uploaded algorithms.
-      Group the results by category and check the result in charts. Based on
-      these results, you can choose the best implementation for your task.
+    </div> -->
+      <div>Recently added tasks, solutions and the latest app changes.</div>
     </div>
   </div>
-</div>
 
-<div class="tab-content">
-
+  <div class="tab-content">
+    <section class="row">
+      <div class="column tasks-column">
+        <h2>Recent Tasks</h2>
+        <app-tasks></app-tasks>
+      </div>
+      <div class="column solutions-column">
+        <h2>Recent Solutions</h2>
+        <app-solutions></app-solutions>
+      </div>
+    </section>
+    <div class="build">
+      <p>Paweł Antoniuk (front-end)</p>
+      <p>Przemysław Jopa (back-end)</p>
+      <p>{{ buildVersion }} ({{ buildDate }})</p>
+    </div>
+  </div>
 </div>

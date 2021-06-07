@@ -1,0 +1,56 @@
+<div class="table-view-container" *ngIf="collectionViewNames.length > 1">
+  <mat-form-field class="dataset-selection" appearance="fill">
+    <mat-label>View</mat-label>
+    <mat-select
+      [(ngModel)]="selectedViewName"
+      (selectionChange)="onCollectionViewSelected()"
+    >
+      <mat-option *ngFor="let name of collectionViewNames" [value]="name">
+        {{ name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-button mat-icon-button (click)="onViewDelete()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
+
+<div class="data-table-container">
+  <table mat-table [dataSource]="dataSource" matSort class="data-table-table">
+    <ng-container
+      *ngFor="let disCol of columns; let colIndex = index"
+      matColumnDef="{{ disCol }}"
+    >
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        (contextmenu)="onColumnContextMenu($event, disCol)"
+      >
+        <p>
+          {{ indices.includes(disCol) ? "🔑" : "" }}
+        </p>
+        <p>
+          {{ disCol }}
+        </p>
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        (dblclick)="onCellClick($event, element, disCol)"
+        (contextmenu)="onCellContextMenu($event, element, disCol)"
+        title="{{ element[disCol] }}"
+      >
+        {{ element[disCol] }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+  </table>
+</div>
+
+<mat-paginator
+  [pageSizeOptions]="[20, 50, 100]"
+  showFirstLastButtons
+></mat-paginator>

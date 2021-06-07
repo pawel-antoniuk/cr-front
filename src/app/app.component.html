@@ -16,82 +16,30 @@
   </a>
 </nav> -->
 
-  <mat-tab-group class="main-tab-bar" backgroundColor="primary" mat-stretch-tabs [@.disabled]="true">
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>campaign</mat-icon>
-        <span class="tab-text">Recents</span>
-      </ng-template>
-      <ng-template matTabContent>
-        <div class="container">
-          <app-recents></app-recents>
-        </div>
-      </ng-template>
-    </mat-tab>
+  <nav
+    mat-tab-nav-bar
+    class="main-tab-bar"
+    backgroundColor="primary"
+    mat-stretch-tabs
+  >
+    <a
+      mat-tab-link
+      *ngFor="let link of links"
+      (click)="activeLink = link"
+      [active]="activeLink == link"
+      [routerLink]="link.link"
+    >
+      <mat-icon>{{link.icon}}</mat-icon>
+      <span class="tab-text">{{link.label}}</span>
+    </a>
+  </nav>
 
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>star</mat-icon>
-        <span class="tab-text">Ranking</span>
-      </ng-template>
-      <ng-template matTabContent>
-        <div class="container">
-          <app-ranking></app-ranking>
-        </div>
-      </ng-template>
-    </mat-tab>
-
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>file_upload</mat-icon>
-        <span class="tab-text">Upload Code</span>
-      </ng-template>
-      <ng-template matTabContent>
-        <div class="container">
-          <app-upload-code></app-upload-code>
-        </div>
-      </ng-template>
-    </mat-tab>
-
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>add_task</mat-icon>
-        <span class="tab-text">Create Task</span>
-      </ng-template>
-      <ng-template matTabContent>
-        <div class="container">
-          <app-add-task></app-add-task>
-        </div>
-      </ng-template>
-    </mat-tab>
-
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>edit</mat-icon>
-        <span class="tab-text">Edit Task</span>
-      </ng-template>
-      <ng-template matTabContent>
-        <div class="container">
-          <app-edit-task></app-edit-task>
-        </div>
-      </ng-template>
-    </mat-tab>
-
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>assessment</mat-icon>
-        <span class="tab-text">Results</span>
-      </ng-template>
-      <ng-template matTabContent>
-        <div class="container">
-          <app-summary></app-summary>
-        </div>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+  <router-outlet></router-outlet>
 
   <div class="logo-placeholder"></div>
   <div class="logo">
-    <img width="200" src="/assets/PB_logo_poziom.png" />
+    <img width="150" src="/assets/PB_logo_poziom.png" />
   </div>
 </div>
+
+<app-context-menu></app-context-menu>

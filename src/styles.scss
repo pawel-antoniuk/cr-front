@@ -29,12 +29,12 @@ section {
   padding: 20px;
 }
 
+
 .tab-content {
   background-color: #fff;
   border-radius: 20px;
   overflow: hidden;
   padding: 20px;
-  padding-top: 40px;
 }
 
 .container {
@@ -49,27 +49,290 @@ section {
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 1;
+  position: relative;
 }
 
-.mat-tab-body.mat-tab-body-active {
-  animation: fade 0.5s;
+.container {
+  animation: fade-left 0.4s;
 }
 
-@keyframes fade {
+@keyframes fade-left {
   0% {
     opacity: 0;
+    // left: -100vw
   }
 
   100% {
     opacity: 1;
+    // left: 0
   }
 }
 
-.main-tab-bar > mat-tab-header {
-  box-shadow: 0 10px 10px -10px rgb(0 0 0 / 80%);
+@keyframes fade-right {
+  0% {
+    opacity: 0;
+    // right: -100vw
+  }
+
+  100% {
+    opacity: 1;
+    // left: 0
+  }
+}
+
+nav.mat-tab-header {
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
   margin-bottom: 10px;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 8;
+  margin-bottom: 0;
 }
 
+
+mat-toolbar {
+  z-index: 10;
+  position: relative;
+}
+
+
+// analysis
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  user-select: none;
+}
+
+#particles-js {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-container > app-dashboard-item {
+  // // flex: 1 1 auto;
+  // // text-align: center;
+  padding: 20px;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.dashboard-title-header {
+  display: inline-flex;
+  line-height: 40px;
+  width: 100%;
+  align-items: baseline;
+  display: flex;
+  align-items: center;
+}
+
+.dashboard-title-subheader {
+  font-size: 75%;
+}
+
+.dataset-selection {
+  width: 400px;
+}
+
+.dataset-half-selection {
+  width: 200px;
+}
+
+.dataset-min-selection {
+  width: 250px;
+}
+
+.dataset-big-selection {
+  width: 650px;
+}
+
+mat-form-field {
+  width: 140px;
+}
+
+.mat-select-panel {
+  max-width: 1000px;
+}
+
+.mat-card-subtitle {
+  max-width: 700px;
+  padding: 0 18px 0 18px;
+}
+
+.mat-select-panel {
+  max-width: 650px !important;
+}
+
+.graph-big-icon-container {
+  width: 800px;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.graph-big-icon-container > mat-icon {
+  font-size: 300px;
+  width: auto;
+  align-items: center;
+  height: auto;
+}
+
+.cdk-global-scrollblock {
+  position: initial;
+}
+
+.dashboard-title {
+  padding: 16px;
+  margin: 0;
+  padding-bottom: 0;
+  margin-bottom: 0 !important;
+}
+
+.dashboard-title p {
+  padding-bottom: 0;
+}
+
+.dashboard-content {
+  background: #fff;
+  border-radius: 0px 0px 15px 15px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.dashboard-item-container * {
+  // background: none;
+}
+
+plotly-plot svg {
+  // background: rgba(255, 255, 255, 0.8) !important;
+  background: none !important;
+  // box-shadow: outset 0 0 40px 20px rgba(255,255,255,0.1);
+}
+
+.sheet-container .mat-tab-header{
+  position: fixed;
+  bottom: 0;
+  backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  z-index: 10000;
+}
+
+.sheet-container .mat-tab-label {
+  height: 30px;
+}
+
+.sheet-container .mat-tab-body-wrapper{
+  margin-bottom: 50px;
+}
+
+// .sheet-container {
+//   flex-direction: column !important;
+//   min-height: 100% !important;
+// }
+
+// .sheet-container * {
+//   overflow-y: visible !important;
+// }
+
+// .sheet-container .mat-tab-body-content {
+//   overflow: visible !important;
+//   overflow-x: hidden;
+// }
+
+// .sheet-container .mat-tab-body {
+//   overflow: visible !important;
+//   overflow-x: hidden;
+// }
+
+// .sheet-container .mat-tab-body-wrapper {
+//   overflow: visible !important;
+//   overflow-x: hidden;
+// }
+
+
+/*
+.data-table-container::-webkit-scrollbar * {
+    background:transparent;
+}
+
+.data-table-container::-webkit-scrollbar-thumb {
+    background:#999 !important;
+}
+*/
+
+.checkbox-wrapper {
+  min-height: 50px;
+  display: flex;
+  >mat-checkbox{
+      align-self: center;
+  }
+}
+
+.data-table-container thead {
+  user-select: none;
+}
+
+.data-table-container td {
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  direction: rtl;
+  text-align: left;
+}
+
+
+.result-menu-tab, .result-menu-tab .mat-tab-label-content {
+  width: 0%;
+  min-width: 0%;
+  overflow: hidden;
+  flex-grow: initial;
+}
+
+// .mat-tab-body-wrapper {
+//   z-index: 100;
+// }
+
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.column {
+  // flex-basis: 100%
+}
+
+.column + .column{
+  margin-left: 40px;
+}
+
+h3.mat-line {
+  margin: 3px;
+}
+
+h4.mat-line {
+  margin: 3px;
+}

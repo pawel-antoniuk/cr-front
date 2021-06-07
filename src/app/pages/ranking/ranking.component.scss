@@ -9,3 +9,81 @@
   display: flex;
   flex-wrap: nowrap;
 }
+
+.task-selection {
+  // width: 100%;
+  flex-grow: 3;
+}
+
+.task-fields {
+  display: flex;
+}
+
+.task-top-n {
+  flex-grow: 1;
+}
+
+
+.desc-icon {
+  // font-size: 30px;
+  // width: 30px;
+  // height: 30px;
+  margin-right: 10px;
+}
+
+.tab-desc-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.build {
+  font-size: 80%;
+  text-align: right;
+  color: #aaa;
+  margin-top: 40px;
+}
+
+.build p{
+  margin: 2px;
+}
+
+.task-id {
+  display: inline-block;
+  font-size: 70%;
+  color: #aaa;
+  text-overflow: ellipsis;
+  max-width: 170px;
+  direction: rtl;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.item-row {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-right-column {
+  text-align: right;
+}
+
+.first-place {
+  color: gold;
+}
+
+.second-place {
+  color:silver;
+}
+
+.third-place {
+  color: brown;
+}
+
+
+mat-icon {
+  vertical-align: middle;
+}

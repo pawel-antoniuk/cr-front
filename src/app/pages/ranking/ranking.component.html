@@ -1,17 +1,93 @@
-<div class="tab-header">
-  <h1>Ranking</h1>
-  <div class="tab-desc-container">
-    <div>
-      <mat-icon class="desc-icon">info_outline</mat-icon>
-    </div>
-    <div>
-      Here you can view the summary of execution of all uploaded algorithms.
-      Group the results by category and check the result in charts. Based on
-      these results, you can choose the best implementation for your task.
+<div class="container">
+  <div class="tab-header">
+    <h1>Ranking</h1>
+    <div class="tab-desc-container">
+      <!-- <div>
+        <mat-icon class="desc-icon">info_outline</mat-icon>
+      </div> -->
+      <div>Most popular taks and best solutions</div>
     </div>
   </div>
-</div>
 
-<div class="tab-content">
+  <div class="tab-content">
+    <section>
+      <div class="task-fields">
+        <mat-form-field appearance="fill" class="task-selection">
+          <mat-label
+            >Show the best solutions for task the task... (sorted by number of
+            solutions)</mat-label
+          >
+          <mat-select
+            [(ngModel)]="selectedTask"
+            (valueChange)="selectedTaskUpdated()"
+          >
+            <mat-option *ngFor="let task of tasks" [value]="task.task">
+              {{ task.task.name }} ({{ task.numberOfSolutions }} solutions)
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="task-top-n">
+          <mat-label>Number of solutions</mat-label>
+          <mat-select
+            [(ngModel)]="selectedNumberOfSolutions"
+            (ngModelChange)="selectedTaskUpdated()"
+          >
+            <mat-option
+              *ngFor="let nSolutions of numberOfSolutions"
+              [value]="nSolutions"
+            >
+              {{ nSolutions }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </section>
+    <section>
+      <h2>Top {{ selectedNumberOfSolutions }}</h2>
+      <mat-list>
+        <mat-list-item *ngFor="let solution of solutions; let i = index">
+          <div class="item-row">
+            <div clas="item-column">
+              <h3 matLine>
+                <mat-icon class="first-place" *ngIf="i == 0">
+                  emoji_events
+                </mat-icon>
+                <mat-icon class="second-place" *ngIf="i == 1">
+                  military_tech
+                </mat-icon>
+                <mat-icon class="third-place" *ngIf="i == 2">
+                  military_tech
+                </mat-icon>
+                {{ formatter.format(solution.name) }}
+                ({{ formatter.format(solution.language) }})
+              </h3>
+              <h4 matLine>
+                {{ formatter.format(solution.taskName) }}
+              </h4>
+              <h4 matLine>
+                {{ formatter.format(solution.executionTime) }} s /
+                {{ formatter.format(solution.memoryUsage) }} KiB
+              </h4>
+              <h4 matLine>
+                Correctness: {{ solution.correctAnswers }} /
+                {{ solution.allAnswers }}
+              </h4>
+            </div>
 
+            <div class="item-right-column">
+              <h3 matLine>
+                <span class="task-id">) id </span>
+                <span class="task-id">({{ solution.id }}</span>
+              </h3>
+              <h4 matLine>
+                <span class="task-id">{{
+                  formatter.format(solution.creationDate)
+                }}</span>
+              </h4>
+            </div>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </section>
+  </div>
 </div>

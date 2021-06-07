@@ -1,0 +1,27 @@
+.task-id {
+  display: inline-block;
+  font-size: 70%;
+  color: #aaa;
+  text-overflow: ellipsis;
+  max-width: 170px;
+  direction: rtl;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.item-row {
+  display: flex;
+  flex-grow: 1;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.item-right-column {
+  text-align: right;
+}
+
+.data-table {
+  width: 100%;
+}

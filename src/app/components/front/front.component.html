@@ -1,0 +1,68 @@
+<!-- <div class="floating-container">
+  <mat-icon class="front-icon">cloud_upload</mat-icon>
+  <mat-icon class="front-icon">transform</mat-icon>
+  <mat-icon class="front-icon">bar_chart</mat-icon>
+  <h1 class="header">
+    Upload
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Transform
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Analyze
+  </h1>
+
+  <h4>
+    A simple but powerful browser-side tool that will help you analyze your data
+  </h4>
+
+  <div class="dataset-list">
+    <br />
+    <mat-action-list>
+      <h3 matSubheader>Recent datasets</h3>
+      <small *ngIf="getCollectionNames().length == 0" >
+        <button disabled mat-list-item>
+          <small>(empty)</small>
+        </button>
+      </small>
+      <button *ngFor="let collectionName of getCollectionNames()" mat-list-item
+        (click)="loadRecentDataset(collectionName)">
+        {{ collectionName }}
+        <div fxFlex></div>
+        <small>
+          {{ getCollectionDate(collectionName) }}
+        </small>
+      </button>
+    </mat-action-list>
+  </div>
+
+  <div class="footer">
+    <small>Paweł Antoniuk @ Bialystok University of Technology</small>
+  </div>
+</div> -->
+
+<div class="container">
+  <div class="tab-header">
+    <h1>Execution results</h1>
+    <div class="tab-desc-container">
+      <div>
+        <mat-icon class="desc-icon">info_outline</mat-icon>
+      </div>
+      <div>
+        Here you can view the summary of execution of all uploaded algorithms.
+        Group the results by category and check the result in charts. Based on
+        these results, you can choose the best implementation for your task.
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <mat-action-list>
+      <h3 matSubheader>What you want to do?</h3>
+      <button mat-list-item (click)="combineAllDatasets()">
+        Combine all the datasets into one
+      </button>
+      <button mat-list-item (click)="loadDataOnly()">
+        Just load all the datasets and I'll do the rest
+      </button>
+    </mat-action-list>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="tab-header">
+    <span class="tab-title"
+      >{{ title }} <span *ngIf="subheader">({{ subheader }})</span></span
+    >
+    <span class="fill-remaining-space"></span>
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="optionsMenu"
+      *ngIf="componentOptions"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onSave()" *ngIf="saveable">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onClone()" *ngIf="cloneable">
+      <mat-icon>file_copy</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="tab-content">
+    <template #container></template>
+  </div>
+</div>
+
+<mat-menu #optionsMenu="matMenu">
+  <button
+    mat-menu-item
+    *ngFor="let option of componentOptions"
+    (click)="onOptionSelected(option.id)"
+  >
+    <mat-icon>{{ option.iconName }}</mat-icon>
+    <span>{{ option.name }}</span>
+  </button>
+</mat-menu>

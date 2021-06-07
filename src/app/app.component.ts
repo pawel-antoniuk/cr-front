@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
+import { AnalysisToolbarComponent } from './components/analysis-toolbar/analysis-toolbar.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -10,27 +13,51 @@ export class AppComponent {
   title = 'cr-front';
   links = [
     {
-      link: 'upload',
-      label: 'Upload code',
+      link: '/recents',
+      label: 'Recents',
+      icon: 'campaign'
     },
     {
-      link: 'add-task',
-      label: 'New task',
+      link: '/ranking',
+      label: 'Ranking',
+      icon: 'star'
     },
     {
-      link: 'edit-task',
+      link: '/tasks-solutions',
+      label: 'Tasks & Solutions',
+      icon: 'task'
+    },
+    {
+      link: '/upload-code',
+      label: 'Upload Code',
+      icon: 'file_upload'
+    },
+    {
+      link: '/create-task',
+      label: 'Create Task',
+      icon: 'add_task'
+    },
+    {
+      link: '/edit-task',
       label: 'Edit Task',
+      icon: 'edit'
     },
     {
-      link: 'summary',
-      label: 'Execution summary',
+      link: '/results',
+      label: 'Results',
+      icon: 'assessment'
     },
   ];
   activeLink = this.links[0];
 
-  constructor(private router: Router) {}
+  isResultTabActive = false;
+
+  constructor(private router: Router,
+    private location: Location) {}
 
   ngOnInit(): void {
-    // this.activeLink = this.links.find(link => link.link === this.router.url) ?? this.links[0];
+    let currentUrl = this.location.path();
+    console.log(currentUrl);
+    this.activeLink = this.links.find(link => link.link === currentUrl) ?? this.links[0];
   }
 }

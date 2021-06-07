@@ -1,181 +1,87 @@
-<div class="tab-header">
-  <h1>Edit an existing task</h1>
-  <p>
-    Here you can edit existing tasks. You can also add test cases to existsing
-    tasks.
-  </p>
-</div>
+<div class="container">
+  <div class="tab-header">
+    <h1>Edit an existing task</h1>
+    <p>
+      Here you can edit existing tasks. You can also add test cases to existsing
+      tasks.
+    </p>
+  </div>
 
-<div class="tab-content">
-  <mat-horizontal-stepper
-    [linear]="true"
-    #stepper
-    (selectionChange)="stepperSelectionChanged($event)"
-  >
-    <!-- Step 1 -->
-    <mat-step label="Select a task" [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <mat-selection-list
-          [(ngModel)]="selectedTasks"
-          multiple="false"
-          formControlName="taskCtrl"
-          required
-          (selectionChange)="onTaskChange()"
-        >
-          <mat-list-option *ngFor="let task of tasks" [value]="task">
-            <h3 matLine>
-              {{ task.name }} <span class="task-id">id: #{{ task.id }} </span>
-            </h3>
-            <h4 matLine>{{ task.description }}</h4>
-          </mat-list-option>
-        </mat-selection-list>
-      </form>
-    </mat-step>
+  <div class="tab-content">
+    <mat-horizontal-stepper
+      [linear]="true"
+      #stepper
+      (selectionChange)="stepperSelectionChanged($event)"
+    >
+      <!-- Step 1 -->
+      <mat-step label="Select a task" [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <mat-selection-list
+            [(ngModel)]="selectedTasks"
+            multiple="false"
+            formControlName="taskCtrl"
+            required
+            (selectionChange)="onTaskChange()"
+          >
+            <mat-list-option *ngFor="let task of tasks" [value]="task">
+              <h3 matLine>
+                {{ task.name }} <span class="task-id">id: #{{ task.id }} </span>
+              </h3>
+              <h4 matLine>{{ task.description }}</h4>
+            </mat-list-option>
+          </mat-selection-list>
+        </form>
+      </mat-step>
 
-    <!-- Step 2 -->
-    <mat-step label="Edit task details" [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <mat-form-field appearance="fill">
-          <mat-label>Name</mat-label>
-          <input
-            matInput
-            [(ngModel)]="editedTask.name"
-            formControlName="nameCtrl"
-          />
-        </mat-form-field>
+      <!-- Step 2 -->
+      <mat-step label="Edit task details" [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="editedTask.name"
+              formControlName="nameCtrl"
+            />
+          </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Description</mat-label>
-          <textarea
-            matInput
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="10"
-            [(ngModel)]="editedTask.description"
-            formControlName="descCtrl"
-          ></textarea>
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="10"
+              [(ngModel)]="editedTask.description"
+              formControlName="descCtrl"
+            ></textarea>
+          </mat-form-field>
 
-        <button mat-button color="warn" (click)="deleteTask(editedTask)">
-          Delete
-        </button>
-
-        <div class="button-box">
-          <button mat-button color="accent" (click)="skipEditTask()">
-            Skip<mat-icon>skip_next</mat-icon>
+          <button mat-button color="warn" (click)="deleteTask(editedTask)">
+            Delete
           </button>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
 
-    <!-- Step 3 -->
-    <mat-step label="Edit test cases" [stepControl]="thridFormGroup">
-      <h3 class="subtask-label">Select an existing test case:</h3>
-      <mat-selection-list
-        multiple="false"
-        required
-        (selectionChange)="onTestCaseChange($event)"
-        #testCaseSelection
-      >
-        <mat-list-option
-          *ngFor="let testCase of selectedTaskTestCases"
-          [value]="testCase"
+          <div class="button-box">
+            <button mat-button color="accent" (click)="skipEditTask()">
+              Skip<mat-icon>skip_next</mat-icon>
+            </button>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 3 -->
+      <mat-step label="Edit test cases" [stepControl]="thridFormGroup">
+        <h3 class="subtask-label">Select an existing test case:</h3>
+        <mat-selection-list
+          multiple="false"
+          required
+          (selectionChange)="onTestCaseChange($event)"
+          #testCaseSelection
         >
-          <h3 matLine>
-            <span>
-              <mat-icon class="inout-icon">input</mat-icon>
-              <span>{{ testCase.input }}</span>
-            </span>
-            <span class="task-id" *ngIf="testCase.id != '(new)'"
-              >id: {{ testCase.id }}</span
-            >
-            <span class="modified-label" *ngIf="testCase.id == '(new)'">{{
-              testCase.id
-            }}</span>
-          </h3>
-          <h3 matLine>
-            <span>
-              <mat-icon class="inout-icon">west</mat-icon>
-              <span>{{ testCase.output }}</span>
-            </span>
-          </h3>
-        </mat-list-option>
-      </mat-selection-list>
-
-      <button mat-button (click)="clearSelection()">Clear selection</button>
-
-      <h3 class="subtask-label" *ngIf="!selectedTestCase.id">
-        ... or create a new test case:
-      </h3>
-      <!-- <mat-form-field appearance="fill">
-                <mat-label>Name</mat-label>
-                <input matInput [(ngModel)]="selectedTestCase.name" formControlName="nameCtrl" />
-            </mat-form-field> -->
-      <mat-form-field appearance="fill">
-        <mat-label><mat-icon>input</mat-icon> Input</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          cdkAutosizeMinRows="10"
-          [(ngModel)]="selectedTestCase.input"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label><mat-icon>west</mat-icon> Output</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          cdkAutosizeMinRows="10"
-          [(ngModel)]="selectedTestCase.output"
-        ></textarea>
-      </mat-form-field>
-      <button
-        color="primary"
-        mat-raised-button
-        [disabled]="
-          !selectedTestCase.input ||
-          !selectedTestCase.output ||
-          selectedTestCase.id
-        "
-        (click)="addTestCase()"
-      >
-        Add
-      </button>
-      <button
-        color="warn"
-        mat-raised-button
-        [disabled]="!selectedTestCase.id"
-        (click)="deleteTestCase(selectedTestCase)"
-      >
-        Delete selected
-      </button>
-
-      <div class="button-box">
-        <button mat-button color="accent" (click)="skipEditTestCases()">
-          Skip<mat-icon>skip_next</mat-icon>
-        </button>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </mat-step>
-
-    <!-- Step 4 -->
-    <mat-step label="Accept changes" [stepControl]="fourthFormGroup">
-      <div *ngIf="!taskEditSkipped">
-        <h1>Task</h1>
-        <div class="task-details">
-          <h2>Name: {{ editedTask.name }}</h2>
-          <small class="task-id">id: {{ editedTask.id }}</small>
-          <p>Description: {{ editedTask.description }}</p>
-        </div>
-      </div>
-
-      <div *ngIf="!testCaseEditSkipped">
-        <h1>Test cases</h1>
-        <mat-list multiple="false">
-          <mat-list-item
-            *ngFor="let testCase of selectedTaskTestCases; let i = index"
+          <mat-list-option
+            *ngFor="let testCase of selectedTaskTestCases"
+            [value]="testCase"
           >
             <h3 matLine>
               <span>
@@ -194,20 +100,116 @@
                 <mat-icon class="inout-icon">west</mat-icon>
                 <span>{{ testCase.output }}</span>
               </span>
-              <span
-                *ngIf="selectedTaskTestCasesIsEdited[i]"
-                class="modified-label"
-                >(modified)</span
-              >
             </h3>
-          </mat-list-item>
-        </mat-list>
-      </div>
-      <!-- <mat-spinner *ngIf="!status"></mat-spinner>
+          </mat-list-option>
+        </mat-selection-list>
+
+        <button mat-button (click)="clearSelection()">Clear selection</button>
+
+        <h3 class="subtask-label" *ngIf="!selectedTestCase.id">
+          ... or create a new test case:
+        </h3>
+        <!-- <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput [(ngModel)]="selectedTestCase.name" formControlName="nameCtrl" />
+            </mat-form-field> -->
+        <mat-form-field appearance="fill">
+          <mat-label><mat-icon>input</mat-icon> Input</mat-label>
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="10"
+            [(ngModel)]="selectedTestCase.input"
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label><mat-icon>west</mat-icon> Output</mat-label>
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="10"
+            [(ngModel)]="selectedTestCase.output"
+          ></textarea>
+        </mat-form-field>
+        <button
+          color="primary"
+          mat-raised-button
+          [disabled]="
+            !selectedTestCase.input ||
+            !selectedTestCase.output ||
+            selectedTestCase.id
+          "
+          (click)="addTestCase()"
+        >
+          Add
+        </button>
+        <button
+          color="warn"
+          mat-raised-button
+          [disabled]="!selectedTestCase.id"
+          (click)="deleteTestCase(selectedTestCase)"
+        >
+          Delete selected
+        </button>
+
+        <div class="button-box">
+          <button mat-button color="accent" (click)="skipEditTestCases()">
+            Skip<mat-icon>skip_next</mat-icon>
+          </button>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+
+      <!-- Step 4 -->
+      <mat-step label="Accept changes" [stepControl]="fourthFormGroup">
+        <div *ngIf="!taskEditSkipped">
+          <h1>Task</h1>
+          <div class="task-details">
+            <h2>Name: {{ editedTask.name }}</h2>
+            <small class="task-id">id: {{ editedTask.id }}</small>
+            <p>Description: {{ editedTask.description }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="!testCaseEditSkipped">
+          <h1>Test cases</h1>
+          <mat-list multiple="false">
+            <mat-list-item
+              *ngFor="let testCase of selectedTaskTestCases; let i = index"
+            >
+              <h3 matLine>
+                <span>
+                  <mat-icon class="inout-icon">input</mat-icon>
+                  <span>{{ testCase.input }}</span>
+                </span>
+                <span class="task-id" *ngIf="testCase.id != '(new)'"
+                  >id: {{ testCase.id }}</span
+                >
+                <span class="modified-label" *ngIf="testCase.id == '(new)'">{{
+                  testCase.id
+                }}</span>
+              </h3>
+              <h3 matLine>
+                <span>
+                  <mat-icon class="inout-icon">west</mat-icon>
+                  <span>{{ testCase.output }}</span>
+                </span>
+                <span
+                  *ngIf="selectedTaskTestCasesIsEdited[i]"
+                  class="modified-label"
+                  >(modified)</span
+                >
+              </h3>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <!-- <mat-spinner *ngIf="!status"></mat-spinner>
     <h2 *ngIf="response">{{ status }}</h2> -->
-      <div class="button-box">
-        <button mat-button (click)="acceptChanges()">Accept</button>
-      </div>
-    </mat-step>
-  </mat-horizontal-stepper>
+        <div class="button-box">
+          <button mat-button (click)="acceptChanges()">Accept</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
 </div>

@@ -1,0 +1,38 @@
+.mat-row {
+  height: auto;
+}
+
+.mat-cell {
+  // padding: 50px 50px 8px 0;
+  // font-size: 14px;
+  // min-height: 48px;
+  // text-align: center;
+  padding: 5px;
+  border-right: 1px solid #aaa;
+}
+
+.data-table-container {
+  overflow: auto;
+  display: flex;
+  max-height: 90vh;
+  // max-width: 90vw;
+  user-select: text;
+}
+
+.data-table-table {
+  margin: auto;
+}
+
+.data-table-container tr > td:nth-last-child(1) {
+  border-right: none;
+}
+
+.data-table-container td {
+  cursor: url(/assets/pencil-cursor.ico) 0 16, auto;
+  min-height: 20px;
+}
+
+mat-paginator {
+  margin-bottom: -10px;
+}
+

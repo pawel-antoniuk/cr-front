@@ -1,11 +1,16 @@
 export class ResultCombined {
-  public executionTime!: number;
-  public memoryUsage!: number;
-  public outputCorrectness!: string;
-  public code!: string;
-  public language!: string;
-  public taskName!: string;
-  public taskId!: string;
-  public input!: string;
-  public output!: string;
+  constructor(
+    public solutionId: string = '',
+    public testCaseId: string = '',
+    public taskId: string = '',
+    public executionTime: number = 0,
+    public memoryUsage: number = 0,
+    public outputCorrectness: string = '',
+    public code: string = '',
+    public language: string = '',
+    public taskName: string = '',
+    public solutionName: string = '',
+    public input: string = '',
+    public output: string = ''
+  ) {}
 }

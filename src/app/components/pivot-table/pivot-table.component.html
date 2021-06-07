@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>Create pivot table</h1>
+
+<div mat-dialog-content>
+  <mat-form-field class="dataset-selection" appearance="fill">
+    <mat-label>Dataset</mat-label>
+    <mat-select [(ngModel)]="selectedViewName" (selectionChange)="onDatasetSelectionChange()">
+      <mat-option>(Clear)</mat-option>
+      <mat-option *ngFor="let name of viewNames" [value]="name">
+        {{name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <br/>
+
+  <mat-form-field class="dataset-half-selection">
+    <mat-label>Row</mat-label>
+    <mat-select [formControl]="columnNameControl">
+      <mat-select-trigger>
+        {{columnNameControl.value}}
+      </mat-select-trigger>
+      <mat-option *ngFor="let header of columnNames" [value]="header">{{header}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="dataset-half-selection">
+    <mat-label>Column</mat-label>
+    <mat-select [formControl]="rowNameControl">
+      <mat-select-trigger>
+        {{rowNameControl.value}}
+      </mat-select-trigger>
+      <mat-option *ngFor="let header of columnNames" [value]="header">{{header}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+<!--
+  <p>Choose a fill method</p>
+  <mat-form-field class="dataset-selection" appearance="fill">
+    <mat-label>Fill method</mat-label>
+    <mat-select [(ngModel)]="selectedMethodName">
+      <mat-option>(Clear)</mat-option>
+      <mat-option *ngFor="let name of methodNames" [value]="name">
+        {{name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+  <button mat-button (click)="onAccept()"
+    [disabled]="!columnNameControl.value || !rowNameControl.value">Ok</button>
+</div>

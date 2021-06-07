@@ -1,6 +1,0 @@
-<mat-selection-list multiple="false" (selectionChange)="onChange($event)">
-  <mat-list-option *ngFor="let task of tasks" [value]="task">
-    <h3 matLine>{{task.name}} <span class="task-id">(#{{task.id}}) </span></h3>
-    <h4 matLine>{{task.description}}</h4>
-  </mat-list-option>
-</mat-selection-list>

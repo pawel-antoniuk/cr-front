@@ -1,0 +1,66 @@
+<div class="navbar-container">
+  <mat-toolbar color="primary" class="navbar">
+    <mat-toolbar-row>
+      <button mat-button (click)="fileInput.click()">Load</button>
+      <button mat-button [matMenuTriggerFor]="datasetsMenu">Datasets</button>
+      <button mat-button [matMenuTriggerFor]="variablesMenu">Variables</button>
+      <button mat-button [matMenuTriggerFor]="analyzeMenu">Analyze</button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
+
+<mat-menu #appInfo="matMenu">
+  <button mat-menu-item>Info</button>
+</mat-menu>
+
+<mat-menu #variablesMenu="matMenu">
+  <button mat-menu-item (click)="openUpdate()">Update values</button>
+
+  <mat-divider></mat-divider>
+
+  <button mat-menu-item (click)="openToNumerical()">To numerical</button>
+  <button mat-menu-item (click)="openDiscretize()">Discretize</button>
+  <button mat-menu-item (click)="openNormalize()">
+    Normalize distribution
+  </button>
+  <button mat-menu-item (click)="openConvertRange()">
+    Arbitrary range scaling
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button mat-menu-item (click)="openRenameCategories()">
+    Rename categories
+  </button>
+  <button mat-menu-item (click)="openShortenFloats()">Shorten floats</button>
+  <button mat-menu-item (click)="openFillEmptyValues()">
+    Fill empty values
+  </button>
+  <button mat-menu-item (click)="openRenameColumns()">Rename columns</button>
+</mat-menu>
+
+<mat-menu #datasetsMenu="matMenu">
+  <button mat-menu-item (click)="openFilter()">Filter</button>
+  <button mat-menu-item (click)="openSplitBy()">Split by variable</button>
+  <button mat-menu-item (click)="openJoin()">Join datasets</button>
+  <button mat-menu-item (click)="openGroup()">Group by variable</button>
+  <button mat-menu-item (click)="openPivotTable()">Pivot table</button>
+</mat-menu>
+
+<mat-menu #analyzeMenu="matMenu">
+  <button mat-menu-item (click)="openStatistics()">Basic statistics</button>
+  <button mat-menu-item (click)="openHistogram()">Histogram</button>
+  <button mat-menu-item (click)="openScatterPlot()">Scatter plot</button>
+  <button mat-menu-item (click)="openCorrelationMatrix()">
+    Correlation matrix
+  </button>
+</mat-menu>
+
+<input
+  hidden
+  (change)="onFileSelected()"
+  #fileInput
+  type="file"
+  id="file"
+  [accept]="'.csv,.txt,.tsv'"
+/>

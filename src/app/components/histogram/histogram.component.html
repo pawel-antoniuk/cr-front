@@ -1,0 +1,41 @@
+<div class="histogram-button-container">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Bins</mat-label>
+    <input matInput type="number" [(ngModel)]="bins" (input)="onChangeBinSize()">
+  </mat-form-field>
+
+  <span *ngFor="let selectedVariable of selectedVariables; index as i">
+
+    <mat-form-field class="dataset-selection" appearance="fill">
+      <mat-label>Dataset</mat-label>
+      <mat-select (selectionChange)="onDatasetSelectionChange(i, $event)"
+        [ngModel]="selectedVariable.dataset">
+        <mat-option>(Clear)</mat-option>
+        <mat-option *ngFor="let name of collectionNames" [value]="name">
+          {{name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Variable X</mat-label>
+      <mat-select (selectionChange)="onVariableSelectionChange(i, $event)"
+        [ngModel]="selectedVariable.selectedVariableName">
+        <mat-option>(Clear)</mat-option>
+        <mat-option *ngFor="let name of selectedVariable.variableNames" [value]="name">
+          {{name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </span>
+
+</div>
+
+<plotly-plot [layout]="graph.layout" [data]="graph.data" *ngIf="graph.data.length > 0"></plotly-plot>
+<div class="graph-big-icon-container" *ngIf="graph.data.length <= 0">
+  <mat-icon>bar_chart</mat-icon>
+</div>
+
+<mat-checkbox [(ngModel)]="normalized" (change)="reloadData()">Normalized</mat-checkbox>

@@ -1,89 +1,93 @@
-<div class="tab-header">
-  <h1>About CodeRunner</h1>
-  <div class="tab-desc-container">
-    <div>
-      <mat-icon class="desc-icon">info_outline</mat-icon>
-    </div>
-    <div>
-      The application allows you to test your implementations of algorithms. The
-      implementation is uploaded in the form of a code wirtten in one of the
-      available proggraming langagues The code is uploaded in response to a
-      task. Each task consist of test cases that specify input and expected
-      output. CodeRunner provides reports that provide information on the used
-      computing resources, which allows you to choose the optimal solution.
+<div class="container">
+  <div class="tab-header">
+    <h1>About CodeRunner</h1>
+    <div class="tab-desc-container">
+      <div>
+        <mat-icon class="desc-icon">info_outline</mat-icon>
+      </div>
+      <div>
+        The application allows you to test your implementations of algorithms.
+        The implementation is uploaded in the form of a code wirtten in one of
+        the available proggraming langagues The code is uploaded in response to
+        a task. Each task consist of test cases that specify input and expected
+        output. CodeRunner provides reports that provide information on the used
+        computing resources, which allows you to choose the optimal solution.
+      </div>
     </div>
   </div>
-</div>
 
-<div class="tab-content">
-  <mat-horizontal-stepper [linear]="true" #stepper>
-    <!-- Step 1 -->
-    <mat-step label="Choose a task" [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <mat-selection-list
-          [(ngModel)]="selectedTasks"
-          multiple="false"
-          formControlName="taskCtrl"
-          required
-          (selectionChange)="onTaskChange()"
-        >
-          <mat-list-option *ngFor="let task of tasks" [value]="task">
-            <h3 matLine>
-              {{ task.name }} <span class="task-id">id: {{ task.id }}</span>
-            </h3>
-            <h4 matLine>{{ task.description }}</h4>
-          </mat-list-option>
-        </mat-selection-list>
+  <div class="tab-content">
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <!-- Step 1 -->
+      <mat-step label="Choose a task" [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <mat-selection-list
+            [(ngModel)]="selectedTasks"
+            multiple="false"
+            formControlName="taskCtrl"
+            required
+            (selectionChange)="onTaskChange()"
+          >
+            <mat-list-option *ngFor="let task of tasks" [value]="task">
+              <h3 matLine>
+                {{ task.name }} <span class="task-id">id: {{ task.id }}</span>
+              </h3>
+              <h4 matLine>{{ task.description }}</h4>
+            </mat-list-option>
+          </mat-selection-list>
 
-        <!-- <app-tasks (onTaskChange)="onTaskChange($event)"></app-tasks> -->
-      </form>
-    </mat-step>
+          <!-- <app-tasks (onTaskChange)="onTaskChange($event)"></app-tasks> -->
+        </form>
+      </mat-step>
 
-    <!-- Step 2 -->
-    <mat-step label="Upload a solution" [stepControl]="secondFormGroup">
-      <div class="task-details">
-        <h1>{{ getSelectedTask()?.name }}</h1>
-        <p>{{ getSelectedTask()?.description }}</p>
-      </div>
-      <p>Your implementation:</p>
-      <form [formGroup]="secondFormGroup">
-        <div class="form-container">
-          <mat-form-field appearance="fill">
-            <mat-label>Code</mat-label>
-            <textarea
-              matInput
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="10"
-              [(ngModel)]="solution.code"
-              formControlName="codeCtrl"
-              required
-            ></textarea>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Language</mat-label>
-            <mat-select
-              [(ngModel)]="solution.language"
-              formControlName="langCtrl"
-              required
-            >
-              <mat-option value="python">Python</mat-option>
-              <mat-option value="java">Java</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div class="button-box">
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext (click)="onUpload()">Next</button>
-          </div>
+      <!-- Step 2 -->
+      <mat-step label="Upload a solution" [stepControl]="secondFormGroup">
+        <div class="task-details">
+          <h1>{{ getSelectedTask()?.name }}</h1>
+          <p>{{ getSelectedTask()?.description }}</p>
         </div>
-      </form>
-    </mat-step>
+        <p>Your implementation:</p>
+        <form [formGroup]="secondFormGroup">
+          <div class="form-container">
+            <mat-form-field appearance="fill">
+              <mat-label>Code</mat-label>
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="10"
+                [(ngModel)]="solution.code"
+                formControlName="codeCtrl"
+                required
+              ></textarea>
+            </mat-form-field>
 
-    <!-- Step 3 -->
-    <mat-step label="View results" [stepControl]="thirdFormGroup">
-      <!-- <mat-spinner *ngIf="!status"></mat-spinner>
+            <mat-form-field appearance="fill">
+              <mat-label>Language</mat-label>
+              <mat-select
+                [(ngModel)]="solution.language"
+                formControlName="langCtrl"
+                required
+              >
+                <mat-option value="python">Python</mat-option>
+                <mat-option value="java">Java</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div class="button-box">
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext (click)="onUpload()">
+                Next
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 3 -->
+      <mat-step label="View results" [stepControl]="thirdFormGroup">
+        <!-- <mat-spinner *ngIf="!status"></mat-spinner>
         <h2 *ngIf="response">{{status}}</h2> -->
-    </mat-step>
-  </mat-horizontal-stepper>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
 </div>

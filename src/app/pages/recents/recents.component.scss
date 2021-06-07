@@ -1,11 +1,34 @@
 .desc-icon {
-  font-size: 60px;
-  width: 60px;
-  height: 60px;
+  // font-size: 30px;
+  // width: 30px;
+  // height: 30px;
   margin-right: 10px;
 }
 
 .tab-desc-container {
   display: flex;
   flex-wrap: nowrap;
+}
+
+.build {
+  font-size: 80%;
+  text-align: right;
+  color: #aaa;
+  margin-top: 40px;
+}
+
+.build p{
+  margin: 2px;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.solutions-column {
+  flex-grow: 3;
+}
+
+.tasks-column {
+  flex-grow: 2;
 }
