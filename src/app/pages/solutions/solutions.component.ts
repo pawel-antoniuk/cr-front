@@ -49,7 +49,7 @@ export class SolutionsComponent implements OnInit {
             (r) => r.outputCorrectness == 'True'
           ).length;
           return {
-            solutionName: `${s.name} (${s.language})`,
+            solutionName: `${this.formatter.format(s.name)} (${s.language})`,
             taskName: tasks.find((t) => t.id == s.taskId).name,
             performance: `${this.formatter.format(executionTime)} s /
             ${this.formatter.format(memoryUsage)} KiB`,

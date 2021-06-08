@@ -34,6 +34,7 @@ export class UploadCodeComponent implements OnInit {
       taskCtrl: ['', Validators.required],
     });
     this.secondFormGroup = this.formBuilder.group({
+      nameCtrl: ['', Validators.required],
       codeCtrl: ['', Validators.required],
       langCtrl: ['', Validators.required]
     });

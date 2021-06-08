@@ -2,16 +2,119 @@
   <div class="tab-header">
     <h1>Tasks & Solutions</h1>
     <div class="tab-desc-container">
-      <!-- <div>
-        <mat-icon class="desc-icon">info_outline</mat-icon>
-      </div> -->
-      <div>Most popular taks and best solutions</div>
+      <div>All added tasks and solutions</div>
     </div>
   </div>
 
   <div class="tab-content">
-    <section>
+    <table mat-table [dataSource]="tasks" multiTemplateDataRows>
+      <ng-container
+        matColumnDef="{{ column }}"
+        *ngFor="let column of taskColumns; let colIndex = index"
+      >
+        <th mat-header-cell *matHeaderCellDef>
+          {{ taskColumnNames[colIndex] }}
+        </th>
+        <td mat-cell *matCellDef="let task">
+          {{ formatter.format(task[column]) }}
+        </td>
+      </ng-container>
 
-    </section>
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let task" [attr.colspan]="taskColumns.length">
+          <div
+            class="detail"
+            [@detailExpand]="task == expandedTask ? 'expanded' : 'collapsed'"
+          >
+            <div class="task-description">
+              <h3>Full Description:</h3>
+              <p>{{ task.description }}</p>
+            </div>
+
+            <!-- Solutions -->
+            <table
+              mat-table
+              [dataSource]="getTaskSolutions(task)"
+              multiTemplateDataRows
+              *ngIf="getTaskSolutions(task).length != 0; else: elseBlock"
+            >
+              <ng-container
+                matColumnDef="{{ column }}"
+                *ngFor="let column of solutionColumns; let colIndex = index"
+              >
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ solutionColumnNames[colIndex] }}
+                </th>
+                <td mat-cell *matCellDef="let solution">
+                  {{ formatter.format(solution[column]) }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="expandedDetail">
+                <td
+                  mat-cell
+                  *matCellDef="let solution"
+                  [attr.colspan]="solutionColumns.length"
+                >
+                  <div
+                    class="detail"
+                    [@detailExpand]="
+                      solution == expandedSolution ? 'expanded' : 'collapsed'
+                    "
+                  >
+                    <div class="solution-description">
+                      <mat-form-field class="field-full-width">
+                        <mat-label>Source Code</mat-label>
+                        <textarea
+                          cdkTextareaAutosize
+                          matInput
+                          [textContent]="solution.code"
+                          [disabled]="true"
+                        ></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="solutionColumns"></tr>
+              <tr
+                mat-row
+                *matRowDef="let solution; columns: solutionColumns"
+                class="element-row"
+                [class.expanded-row]="expandedSolution === solution"
+                (click)="
+                  expandedSolution =
+                    expandedSolution === solution ? null : solution
+                "
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: ['expandedDetail']"
+                class="detail-row"
+              ></tr>
+            </table>
+
+            <ng-template #elseBlock>
+              <p>(no solutions)</p>
+            </ng-template>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="taskColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let task; columns: taskColumns"
+        class="element-row"
+        [class.expanded-row]="expandedTask === task"
+        (click)="expandedTask = expandedTask === task ? null : task"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['expandedDetail']"
+        class="detail-row"
+      ></tr>
+    </table>
   </div>
 </div>

@@ -9,6 +9,7 @@ import {
 } from 'src/app/services/context-menu.service';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { DataService } from 'src/app/services/data.service';
+import { FormatterService } from 'src/app/services/formatter.service';
 import {
   CloneableDashboardItem,
   ComponentOption,
@@ -60,7 +61,8 @@ export class DataTableComponent
   constructor(
     private dataService: DataService,
     private dashboardService: DashboardService,
-    private contextMenuService: ContextMenuService
+    private contextMenuService: ContextMenuService,
+    public formatter: FormatterService
   ) {}
 
   ngOnDestroy(): void {
@@ -165,18 +167,20 @@ export class DataTableComponent
     event.target.style.padding = '2px';
     event.target.append(input);
     input.focus();
+    input.select();
 
     input.onblur = () => {
       const newValue = input.value;
-      event.target.innerHTML = newValue;
-      event.target.style.padding = '';
 
-      const newNumberValue = parseFloat(newValue);
-      if (isNaN(newNumberValue)) {
+      if (isNaN(newValue as unknown as number)) {
         row[col] = newValue;
+        event.target.innerHTML = this.formatter.format(newValue);
       } else {
+        const newNumberValue = parseFloat(newValue);
         row[col] = newNumberValue;
+        event.target.innerHTML = this.formatter.format(newNumberValue);
       }
+      event.target.style.padding = '';
     };
   }
 

@@ -41,7 +41,7 @@
         (contextmenu)="onCellContextMenu($event, element, disCol)"
         title="{{ element[disCol] }}"
       >
-        {{ element[disCol] }}
+        {{ formatter.format(element[disCol]) }}
       </td>
     </ng-container>
 

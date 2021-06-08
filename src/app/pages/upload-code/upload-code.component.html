@@ -43,12 +43,20 @@
       <!-- Step 2 -->
       <mat-step label="Upload a solution" [stepControl]="secondFormGroup">
         <div class="task-details">
-          <h1>{{ getSelectedTask()?.name }}</h1>
-          <p>{{ getSelectedTask()?.description }}</p>
+          <h1>Name: {{ getSelectedTask()?.name }}</h1>
+          <p>Description: {{ getSelectedTask()?.description }}</p>
         </div>
-        <p>Your implementation:</p>
         <form [formGroup]="secondFormGroup">
           <div class="form-container">
+            <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <input
+                matInput
+                [(ngModel)]="solution.name"
+                formControlName="nameCtrl"
+                required>
+            </mat-form-field>
+
             <mat-form-field appearance="fill">
               <mat-label>Code</mat-label>
               <textarea
