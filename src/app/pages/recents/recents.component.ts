@@ -69,8 +69,8 @@ export class RecentsComponent implements OnInit {
     config: { responsive: true },
   };
 
-  buildVersion = 'v0.71';
-  buildDate = '06.06.2021';
+  buildVersion = 'v0.81';
+  buildDate = '07.06.2021';
 
   allTasks?: Task[];
   allSolutions?: Solution[];
@@ -78,7 +78,7 @@ export class RecentsComponent implements OnInit {
   tasks?: Task[];
   solutions?: RecentSolution[];
 
-  constructor(private dataService: DataService, private datePipe: DatePipe) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
     combineLatest([
