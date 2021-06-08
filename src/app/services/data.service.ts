@@ -12,7 +12,7 @@ import { DataTableComponent } from '../components/data-table/data-table.componen
 import { Result } from '../models/result';
 import { ResultCombined } from '../models/result-combined';
 
-const BASE_URL = 'https://localhost:5001/api';
+const BASE_URL = 'https://backend.code.antoniuk.pl/api';
 
 let db: loki = new loki('db.json');
 
