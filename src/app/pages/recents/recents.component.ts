@@ -43,6 +43,7 @@ export class RecentsComponent implements OnInit {
         }
       }
     },
+
     solutionsLayout: {
       ...this.layout,
       title:'Solutions',
@@ -55,8 +56,16 @@ export class RecentsComponent implements OnInit {
       }
     },
 
+    languagePieChartLayout: {
+      title: 'Language',
+      width: 500,
+      height: 400,
+      margin: { l: 45, r: 40, t: 30, b: 100 },
+    },
+
     tasksData: [],
     solutionsData: [],
+    languagePieChartData: [],
     config: { responsive: true },
   };
 
@@ -110,6 +119,12 @@ export class RecentsComponent implements OnInit {
   }
 
   fillData() {
+    this.addTaskTrace();
+    this.addSolutionsTrace();
+    this.addLanguagePieChart();
+  }
+
+  addTaskTrace() {
     let tasksTrace = {
       type: 'scattergl',
       mode: 'lines+markers',
@@ -133,8 +148,9 @@ export class RecentsComponent implements OnInit {
     }
 
     this.graph.tasksData.push(tasksTrace);
+  }
 
-
+  addSolutionsTrace() {
     let solutionsTrace = {
       type: 'scattergl',
       mode: 'lines+markers',
@@ -158,5 +174,29 @@ export class RecentsComponent implements OnInit {
     }
 
     this.graph.solutionsData.push(solutionsTrace);
+  }
+
+  addLanguagePieChart() {
+    let data = {
+      type: 'pie',
+      values: [],
+      labels: [],
+    };
+
+    let solutionsByLanguage = this.allSolutions
+    .reduce((p, c) => {
+      let key = c.language;
+      return {
+        ...p,
+        [key]: [...(p[key] || []), c],
+      };
+    }, {});
+
+    for (let language in solutionsByLanguage) {
+      data.labels.push(language);
+      data.values.push(solutionsByLanguage[language].length);
+    }
+
+    this.graph.languagePieChartData = [data];
   }
 }

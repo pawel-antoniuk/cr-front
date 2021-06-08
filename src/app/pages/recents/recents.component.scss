@@ -33,3 +33,8 @@
 .tasks-column {
   flex-grow: 2;
 }
+
+.last-row .column {
+  display: flex;
+  align-items: flex-end;
+}

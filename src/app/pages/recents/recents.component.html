@@ -20,6 +20,7 @@
         <app-solutions></app-solutions>
       </div>
     </section>
+
     <section>
       <div class="row">
         <div class="column">
@@ -37,13 +38,21 @@
           ></plotly-plot>
         </div>
       </div>
-    </section>
-
-    <section>
-      <div class="build">
-        <p>Paweł Antoniuk (front-end)</p>
-        <p>Przemysław Jopa (back-end)</p>
-        <p>{{ buildVersion }} ({{ buildDate }})</p>
+      <div class="row last-row">
+        <div class="column">
+          <plotly-plot
+            [layout]="graph.languagePieChartLayout"
+            [data]="graph.languagePieChartData"
+            [config]="graph.config"
+          ></plotly-plot>
+        </div>
+        <div class="column">
+          <div class="build">
+            <p>Paweł Antoniuk (front-end)</p>
+            <p>Przemysław Jopa (back-end)</p>
+            <p>{{ buildVersion }} ({{ buildDate }})</p>
+          </div>
+        </div>
       </div>
     </section>
   </div>
