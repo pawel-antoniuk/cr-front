@@ -20,10 +20,31 @@
         <app-solutions></app-solutions>
       </div>
     </section>
-    <div class="build">
-      <p>Paweł Antoniuk (front-end)</p>
-      <p>Przemysław Jopa (back-end)</p>
-      <p>{{ buildVersion }} ({{ buildDate }})</p>
-    </div>
+    <section>
+      <div class="row">
+        <div class="column">
+          <plotly-plot
+            [layout]="graph.tasksLayout"
+            [data]="graph.tasksData"
+            [config]="graph.config"
+          ></plotly-plot>
+        </div>
+        <div class="column">
+          <plotly-plot
+            [layout]="graph.solutionsLayout"
+            [data]="graph.solutionsData"
+            [config]="graph.config"
+          ></plotly-plot>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="build">
+        <p>Paweł Antoniuk (front-end)</p>
+        <p>Przemysław Jopa (back-end)</p>
+        <p>{{ buildVersion }} ({{ buildDate }})</p>
+      </div>
+    </section>
   </div>
 </div>

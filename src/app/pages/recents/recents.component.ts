@@ -4,6 +4,7 @@ import { Solution } from 'src/app/models/solution';
 import { RecentSolution } from 'src/app/models/recent-solution';
 import { Task } from 'src/app/models/task';
 import { DataService } from 'src/app/services/data.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-recents',
@@ -11,13 +12,64 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./recents.component.scss'],
 })
 export class RecentsComponent implements OnInit {
+  layout = {
+    width: 500,
+    height: 400,
+    margin: { l: 45, r: 40, t: 30, b: 100 },
+    xaxis: {
+      // rangemode: 'tozero',
+      tickangle: 0,
+      title: {
+        text: 'Date',
+      },
+      type: 'date'
+    },
+    yaxis: {
+      rangemode: 'tozero',
+      title: {
+      },
+    },
+  };
+
+  public graph: any = {
+    tasksLayout: {
+      ...this.layout,
+      title:'Tasks',
+      yaxis: {
+        ...this.layout.yaxis,
+        title: {
+          ...this.layout.yaxis.title,
+          text: 'Number of tasks',
+        }
+      }
+    },
+    solutionsLayout: {
+      ...this.layout,
+      title:'Solutions',
+      yaxis: {
+        ...this.layout.yaxis,
+        title: {
+          ...this.layout.yaxis.title,
+          text: 'Number of solutions',
+        }
+      }
+    },
+
+    tasksData: [],
+    solutionsData: [],
+    config: { responsive: true },
+  };
+
   buildVersion = 'v0.71';
   buildDate = '06.06.2021';
+
+  allTasks?: Task[];
+  allSolutions?: Solution[];
 
   tasks?: Task[];
   solutions?: RecentSolution[];
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     combineLatest([
@@ -25,6 +77,10 @@ export class RecentsComponent implements OnInit {
       this.dataService.getAllSolutions(),
       this.dataService.getAllResults(),
     ]).subscribe(([tasks, solutions, results]) => {
+      this.allTasks = tasks;
+      this.allSolutions = solutions;
+      this.fillData();
+
       this.solutions = solutions
         .sort((a, b) => a.creationDate.getTime() - b.creationDate.getTime())
         .map((s) => {
@@ -42,13 +98,65 @@ export class RecentsComponent implements OnInit {
               (r) => r.outputCorrectness == 'True'
             ).length,
             allAnswers: filteredResults.length,
-            solutionName: s.name
+            solutionName: s.name,
           };
         })
         .slice(0, 3);
+
       this.tasks = tasks
         .sort((a, b) => b.creationDate.getTime() - a.creationDate.getTime())
         .slice(0, 3);
     });
+  }
+
+  fillData() {
+    let tasksTrace = {
+      type: 'scattergl',
+      mode: 'lines+markers',
+      marker: {},
+      x: [],
+      y: [],
+    };
+
+    let tasksByDate = this.allTasks
+      .reduce((p, c) => {
+        let key = c.creationDate.toDateString();
+        return {
+          ...p,
+          [key]: [...(p[key] || []), c],
+        };
+      }, {});
+
+    for (let date in tasksByDate) {
+      tasksTrace.x.push(new Date(tasksByDate[date][0].creationDate.toDateString()));
+      tasksTrace.y.push(tasksByDate[date].length);
+    }
+
+    this.graph.tasksData.push(tasksTrace);
+
+
+    let solutionsTrace = {
+      type: 'scattergl',
+      mode: 'lines+markers',
+      marker: {},
+      x: [],
+      y: [],
+    };
+
+    let solutionsByDate = this.allSolutions
+      .reduce((p, c) => {
+        let key = c.creationDate.toDateString();
+        return {
+          ...p,
+          [key]: [...(p[key] || []), c],
+        };
+      }, {});
+
+    for (let date in solutionsByDate) {
+      solutionsTrace.x.push(new Date(solutionsByDate[date][0].creationDate.toDateString()));
+      solutionsTrace.y.push(solutionsByDate[date].length);
+    }
+
+    this.graph.solutionsData.push(solutionsTrace);
   }
 }
