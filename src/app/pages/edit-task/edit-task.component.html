@@ -137,7 +137,7 @@
           [disabled]="
             !selectedTestCase.input ||
             !selectedTestCase.output ||
-            selectedTestCase.id
+            !!selectedTestCase.id
           "
           (click)="addTestCase()"
         >
