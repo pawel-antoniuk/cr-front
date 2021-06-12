@@ -69,8 +69,8 @@ export class RecentsComponent implements OnInit {
     config: { responsive: true },
   };
 
-  buildVersion = 'v0.81';
-  buildDate = '07.06.2021';
+  buildVersion = 'v0.91';
+  buildDate = '10.06.2021';
 
   allTasks?: Task[];
   allSolutions?: Solution[];

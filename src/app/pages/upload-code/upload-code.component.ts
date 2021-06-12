@@ -6,6 +6,8 @@ import { DataService } from '../../services/data.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Solution } from 'src/app/models/solution';
 import { TestCase } from 'src/app/models/test-case';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertComponent } from 'src/app/components/alert/alert.component';
 
 @Component({
   selector: 'app-upload-code',
@@ -23,7 +25,8 @@ export class UploadCodeComponent implements OnInit {
   solution: Solution = new Solution();
 
   constructor(private formBuilder: FormBuilder,
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.dataService.getAllTasks().subscribe(tasks => {
@@ -50,7 +53,13 @@ export class UploadCodeComponent implements OnInit {
   async onUpload() {
     this.stepper.next();
     this.solution.taskId = this.selectedTasks![0].id;
-    this.dataService.createSolution(this.solution).subscribe(() => window.location.reload())
+    this.dataService.createSolution(this.solution).subscribe(() =>
+    this.dialog.open(AlertComponent, {
+      data: {
+        title: 'Success',
+        message: 'The action was successful'
+      }
+    }).afterClosed().subscribe(() => window.location.reload()))
   }
 
   getSelectedTask(): Task | undefined {

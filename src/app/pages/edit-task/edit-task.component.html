@@ -106,6 +106,35 @@
 
         <button mat-button (click)="clearSelection()">Clear selection</button>
 
+        <div *ngIf="toDeleteTestCases.length > 0">
+          <h1>Test cases for deletion</h1>
+          <mat-list multiple="false">
+            <mat-list-item
+              class="delete-label"
+              *ngFor="let testCase of toDeleteTestCases; let i = index"
+            >
+              <h3 matLine>
+                <span>
+                  <mat-icon class="inout-icon">input</mat-icon>
+                  <span>{{ testCase.input }}</span>
+                </span>
+                <span class="task-id" *ngIf="testCase.id != '(new)'"
+                  >id: {{ testCase.id }}</span
+                >
+                <span class="modified-label" *ngIf="testCase.id == '(new)'">{{
+                  testCase.id
+                }}</span>
+              </h3>
+              <h3 matLine>
+                <span>
+                  <mat-icon class="inout-icon">west</mat-icon>
+                  <span>{{ testCase.output }}</span>
+                </span>
+              </h3>
+            </mat-list-item>
+          </mat-list>
+        </div>
+
         <h3 class="subtask-label" *ngIf="!selectedTestCase.id">
           ... or create a new test case:
         </h3>
@@ -163,7 +192,7 @@
 
       <!-- Step 4 -->
       <mat-step label="Accept changes" [stepControl]="fourthFormGroup">
-        <div *ngIf="!taskEditSkipped">
+        <div *ngIf="!taskEditSkipped && toDeleteTasks.length <= 0">
           <h1>Task</h1>
           <div class="task-details">
             <h2>Name: {{ editedTask.name }}</h2>
@@ -172,7 +201,18 @@
           </div>
         </div>
 
-        <div *ngIf="!testCaseEditSkipped">
+        <div *ngIf="toDeleteTasks.length > 0">
+          <div class="delete-label" *ngFor="let toDeleteTask of toDeleteTasks">
+            <h1>Task for deletion</h1>
+            <div class="task-details">
+              <h2>Name: {{ toDeleteTask.name }}</h2>
+              <small class="task-id">id: {{ toDeleteTask.id }}</small>
+              <p>Description: {{ toDeleteTask.description }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!testCaseEditSkipped && toDeleteTasks.length <= 0">
           <h1>Test cases</h1>
           <mat-list multiple="false">
             <mat-list-item
@@ -196,13 +236,41 @@
                   <span>{{ testCase.output }}</span>
                 </span>
                 <span
-                  *ngIf="selectedTaskTestCasesIsEdited[i]"
+                  *ngIf="testCase.isEdited"
                   class="modified-label"
                   >(modified)</span
                 >
               </h3>
             </mat-list-item>
           </mat-list>
+          <div *ngIf="toDeleteTestCases.length > 0">
+            <h1>Test cases for deletion</h1>
+            <mat-list multiple="false">
+              <mat-list-item
+                class="delete-label"
+                *ngFor="let testCase of toDeleteTestCases; let i = index"
+              >
+                <h3 matLine>
+                  <span>
+                    <mat-icon class="inout-icon">input</mat-icon>
+                    <span>{{ testCase.input }}</span>
+                  </span>
+                  <span class="task-id" *ngIf="testCase.id != '(new)'"
+                    >id: {{ testCase.id }}</span
+                  >
+                  <span class="modified-label" *ngIf="testCase.id == '(new)'">{{
+                    testCase.id
+                  }}</span>
+                </h3>
+                <h3 matLine>
+                  <span>
+                    <mat-icon class="inout-icon">west</mat-icon>
+                    <span>{{ testCase.output }}</span>
+                  </span>
+                </h3>
+              </mat-list-item>
+            </mat-list>
+          </div>
         </div>
         <!-- <mat-spinner *ngIf="!status"></mat-spinner>
     <h2 *ngIf="response">{{ status }}</h2> -->

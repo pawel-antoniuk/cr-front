@@ -111,9 +111,7 @@ export class DataService {
   }
 
   updateTask(task: Task): Observable<any> {
-    return this.put('Task/Update', { TaskModel: task }).pipe(
-      map((r) => this.getAllTasks())
-    );
+    return this.put('Task/Update', { TaskModel: task });
   }
 
   updateTestCase(testCase: TestCase): Observable<any> {

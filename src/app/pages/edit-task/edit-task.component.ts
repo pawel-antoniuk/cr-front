@@ -11,6 +11,19 @@ import {
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { combineLatest, forkJoin, merge, of, zip } from 'rxjs';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { AlertComponent } from 'src/app/components/alert/alert.component';
+
+export class EditableTestCase {
+  constructor(
+    public id: string = '',
+    public taskId: string = '',
+    // public name: string,
+    public input: string = '',
+    public output: string = '',
+    public isEdited: boolean = false
+  ) {}
+}
 
 @Component({
   selector: 'app-edit-task',
@@ -22,7 +35,9 @@ export class EditTaskComponent implements OnInit {
   @ViewChild('testCaseSelection') testCaseSelection!: MatSelectionList;
 
   public selctedTask?: Task;
-  public selectedTestCase = new TestCase();
+  public selectedTestCase = new EditableTestCase();
+  public toDeleteTestCases: EditableTestCase[] = [];
+  public toDeleteTasks: Task[] = [];
   tasks: Task[] = [];
   selectedTasks?: Task[];
   editedTask: Task = new Task();
@@ -30,14 +45,14 @@ export class EditTaskComponent implements OnInit {
   secondFormGroup!: FormGroup;
   thridFormGroup!: FormGroup;
   fourthFormGroup!: FormGroup;
-  selectedTaskTestCases: TestCase[] = [];
-  selectedTaskTestCasesIsEdited: boolean[] = [];
+  selectedTaskTestCases: EditableTestCase[] = [];
   taskEditSkipped = false;
   testCaseEditSkipped = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private dataService: DataService
+    private dataService: DataService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -77,10 +92,10 @@ export class EditTaskComponent implements OnInit {
     this.dataService
       .getTestCasesByTaskId(this.getSelectedTask()!.id)
       .subscribe((testCases) => {
-        this.selectedTaskTestCases = testCases;
-        this.selectedTaskTestCasesIsEdited = new Array<boolean>(
-          this.selectedTaskTestCases.length
-        );
+        this.selectedTaskTestCases = testCases.map((tc) => ({
+          ...tc,
+          isEdited: false,
+        }));
       });
 
     if (
@@ -93,10 +108,7 @@ export class EditTaskComponent implements OnInit {
 
   onTestCaseChange(ev: MatSelectionListChange) {
     this.selectedTestCase = ev.option.value;
-    let testCaseIndex = this.selectedTaskTestCases.findIndex(
-      (t) => t.id == this.selectedTestCase.id
-    );
-    this.selectedTaskTestCasesIsEdited[testCaseIndex!] = true;
+    this.selectedTestCase.isEdited = true;
   }
 
   getSelectedTask(): Task | undefined {
@@ -116,35 +128,52 @@ export class EditTaskComponent implements OnInit {
   }
 
   deleteTask(task: Task) {
-    this.dataService.deleteTask(task).subscribe(() => {
-      let indx = this.tasks.indexOf(task);
-      this.tasks.splice(indx, 1);
-    });
+    this.toDeleteTasks.push(task);
+    this.stepper.next();
+    this.stepper.next();
   }
 
   stepperSelectionChanged(event: StepperSelectionEvent) {}
 
   acceptChanges() {
-    if (!this.taskEditSkipped) {
-      this.dataService.updateTask(this.editedTask).subscribe(() => {
-        window.location.reload();
-      });
-    }
+    let taskUpdateObservables = !this.taskEditSkipped
+      ? [this.dataService.updateTask(this.editedTask)]
+      : [];
+    let deleteTestCaseObservables = this.toDeleteTestCases.map((tc) =>
+      this.dataService.deleteTestCase(tc)
+    );
+    let deleteTaskObservables = this.toDeleteTasks.map((t) =>
+      this.dataService.deleteTask(t)
+    );
+    let updateTestCaseObservables = this.selectedTaskTestCases.map((t, i) => {
+      if (t.id == '(new)') {
+        return this.dataService.addTestCase(t);
+      } else if (t.isEdited) {
+        return this.dataService.updateTestCase(t);
+      }
+      return null;
+    }).filter(t => t != null);
 
-    if (!this.testCaseEditSkipped) {
-      combineLatest(
-        this.selectedTaskTestCases.map((t, i) => {
-          if (t.id == '(new)') {
-            return this.dataService.addTestCase(t);
-          } else if (this.selectedTaskTestCasesIsEdited[i]) {
-            return this.dataService.updateTestCase(t);
-          }
-          return of();
+    let observables = [
+      ...updateTestCaseObservables,
+      ...deleteTestCaseObservables,
+      ...taskUpdateObservables,
+      ...deleteTaskObservables,
+    ];
+
+    console.log(observables);
+
+    combineLatest(observables).subscribe(() => {
+      this.dialog
+        .open(AlertComponent, {
+          data: {
+            title: 'Success',
+            message: 'The action was successful',
+          },
         })
-      ).subscribe(() => {
-        window.location.reload();
-      });
-    }
+        .afterClosed()
+        .subscribe(() => window.location.reload());
+    });
   }
 
   addTestCase() {
@@ -153,6 +182,7 @@ export class EditTaskComponent implements OnInit {
       taskId: this.editedTask.id,
       input: this.selectedTestCase.input,
       output: this.selectedTestCase.output,
+      isEdited: true
     });
     this.selectedTestCase.input = '';
     this.selectedTestCase.output = '';
@@ -160,13 +190,16 @@ export class EditTaskComponent implements OnInit {
 
   clearSelection() {
     this.testCaseSelection.deselectAll();
-    this.selectedTestCase = new TestCase();
+    this.selectedTestCase = new EditableTestCase();
   }
 
-  deleteTestCase(testCase: TestCase) {
-    this.dataService.deleteTestCase(testCase).subscribe(() => {
-      let indx = this.selectedTaskTestCases.indexOf(testCase);
-      this.selectedTaskTestCases.splice(indx, 1);
-    });
+  deleteTestCase(testCase: EditableTestCase) {
+    this.selectedTaskTestCases.splice(
+      this.selectedTaskTestCases.indexOf(testCase),
+      1
+    );
+    this.toDeleteTestCases.push(testCase);
+    this.selectedTestCase = new EditableTestCase();
+    this.clearSelection();
   }
 }

@@ -7,6 +7,8 @@ import { DataService } from '../../services/data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AlertComponent } from 'src/app/components/alert/alert.component';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-task',
@@ -25,7 +27,8 @@ export class AddTaskComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
    ) { }
 
   ngOnInit(): void {
@@ -34,26 +37,17 @@ export class AddTaskComponent implements OnInit {
       nameCtrl: ['', Validators.required],
       descCtrl: ['', Validators.required],
     });
-    // this.dataService.getTasks().subscribe({
-    //   next: tasks => {
-    //     this.tasks = tasks;
-    //   }
-    // })
   }
 
   saveBtn() {
     this.dataService.addTask(this.newTask).subscribe(() => {
-      window.location.reload();
+      this.dialog.open(AlertComponent, {
+        data: {
+          title: 'Success',
+          message: 'The action was successful'
+        }
+      }).afterClosed().subscribe(() => window.location.reload());
     })
   }
-
-  // onTaskChange() {
-  //   this.stepper.next();
-  //   console.log("XD STEPPER!");
-  // }
-
-  // onTestCaseChange(ev: MatSelectionListChange) {
-  //   this.selectedTestCase = ev.option.value;
-  // }
 
 }
